@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.sujit.quartzscheduling.constant.SchedulerConstant;
-import org.sujit.quartzscheduling.quartz.SingleTriggerCornJobScheduler;
-
-import java.util.TimeZone;
+import org.sujit.quartzscheduling.quartz.SingleTriggerCronJobScheduler;
 
 @Component
 @Slf4j
@@ -25,10 +23,10 @@ public class DoLogScheduler  implements Job {
 
     @Configuration
     class DoLogSchedulerJobConfig {
-        private final SingleTriggerCornJobScheduler singleTriggerCornJobScheduler;
+        private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
         private final String logSchedulerCornExpression;
 
-        public DoLogSchedulerJobConfig(SingleTriggerCornJobScheduler singleTriggerCornJobScheduler,
+        public DoLogSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
                                        @Value("${quartz.logScheduler.expression: 0 * * * * *}") String logSchedulerCornExpression
                                        ) {
             this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;

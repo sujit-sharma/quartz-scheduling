@@ -14,7 +14,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SingleTriggerCornJobScheduler {
+public class SingleTriggerCronJobScheduler {
 
     private final Scheduler scheduler;
 
