@@ -1,4 +1,6 @@
 quartz:
   logScheduler:
-    expression: '1,3,5,7,25,37,45 * * * * ?'
+    expression: '1,3,5,7,25,45 * * * * ?'
+  timeScheduler:
+    expression: '12,2,35,55 * * * * ?'
 
