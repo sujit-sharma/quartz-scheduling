@@ -1,0 +1,4 @@
+quartz:
+  logScheduler:
+    expression: '1,3,5,7,25,37,45 * * * * ?'
+
