@@ -31,7 +31,7 @@ class PrintTimeSchedulerJobConfig {
     private final String logSchedulerCornExpression;
 
     public PrintTimeSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                   @Value("${quartz.timeScheduler.expression: * 1/2 * * * *}") String logSchedulerCornExpression
+                                   @Value("${quartz.timeScheduler.expression: * 1/2 * * * ?}") String logSchedulerCornExpression
                                    ) {
         this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
         this.logSchedulerCornExpression = logSchedulerCornExpression;
