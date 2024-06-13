@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.sujit.quartzscheduling.constant.SchedulerConstant;
 import org.sujit.quartzscheduling.quartz.SingleTriggerCronJobScheduler;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Component
@@ -23,26 +22,27 @@ public class PrintTimeScheduler implements Job {
         log.info("Time right now is {}", ZonedDateTime.now());
         log.info("Do log related task here !!");
     }
+}
 
-    @Configuration
-    class PrintTimeSchedulerJobConfig {
-        private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
-        private final String logSchedulerCornExpression;
+@Configuration
+class PrintTimeSchedulerJobConfig {
 
-        public PrintTimeSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                       @Value("${quartz.timeScheduler.expression: * 1/2 * * * *}") String logSchedulerCornExpression
-                                       ) {
-            this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
-            this.logSchedulerCornExpression = logSchedulerCornExpression;
-        }
+    private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
+    private final String logSchedulerCornExpression;
+
+    public PrintTimeSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
+                                   @Value("${quartz.timeScheduler.expression: * 1/2 * * * *}") String logSchedulerCornExpression
+                                   ) {
+        this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
+        this.logSchedulerCornExpression = logSchedulerCornExpression;
+    }
 
 
-        @EventListener(ApplicationReadyEvent.class)
-        public void schedulePrintTimeSchedulerJob() throws SchedulerException {
-            singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("PrintTimeScheduler"),
-                    PrintTimeScheduler.class,
-                    logSchedulerCornExpression,
-                    SchedulerConstant.DEFAULT_TIMEZONE);
-        }
+    @EventListener(ApplicationReadyEvent.class)
+    public void schedulePrintTimeSchedulerJob() throws SchedulerException {
+        singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("PrintTimeScheduler"),
+                PrintTimeScheduler.class,
+                logSchedulerCornExpression,
+                SchedulerConstant.DEFAULT_TIMEZONE);
     }
 }

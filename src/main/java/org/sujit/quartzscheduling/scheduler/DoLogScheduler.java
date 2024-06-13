@@ -20,26 +20,26 @@ public class DoLogScheduler  implements Job {
         log.info("Logger Job get executed");
         log.info("Do log related task here !!");
     }
+}
 
-    @Configuration
-    class DoLogSchedulerJobConfig {
-        private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
-        private final String logSchedulerCornExpression;
+@Configuration
+class DoLogSchedulerJobConfig {
+    private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
+    private final String logSchedulerCornExpression;
 
-        public DoLogSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                       @Value("${quartz.logScheduler.expression: 0 * * * * *}") String logSchedulerCornExpression
-                                       ) {
-            this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
-            this.logSchedulerCornExpression = logSchedulerCornExpression;
-        }
+    public DoLogSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
+                                   @Value("${quartz.logScheduler.expression: 0 * * * * *}") String logSchedulerCornExpression
+                                   ) {
+        this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
+        this.logSchedulerCornExpression = logSchedulerCornExpression;
+    }
 
 
-        @EventListener(ApplicationReadyEvent.class)
-        public void scheduleLogSchedulerJob() throws SchedulerException {
-            singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("DoLogScheduler"),
-                    DoLogScheduler.class,
-                    logSchedulerCornExpression,
-                    SchedulerConstant.DEFAULT_TIMEZONE);
-        }
+    @EventListener(ApplicationReadyEvent.class)
+    public void scheduleLogSchedulerJob() throws SchedulerException {
+        singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("DoLogScheduler"),
+                DoLogScheduler.class,
+                logSchedulerCornExpression,
+                SchedulerConstant.DEFAULT_TIMEZONE);
     }
 }
