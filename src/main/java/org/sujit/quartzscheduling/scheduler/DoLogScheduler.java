@@ -28,7 +28,7 @@ class DoLogSchedulerJobConfig {
     private final String logSchedulerCornExpression;
 
     public DoLogSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                   @Value("${quartz.logScheduler.expression: 0 * * * * ?}") String logSchedulerCornExpression
+                                   @Value("${quartz.logScheduler.expression: 0 /10 * * * ?}") String logSchedulerCornExpression
                                    ) {
         this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
         this.logSchedulerCornExpression = logSchedulerCornExpression;

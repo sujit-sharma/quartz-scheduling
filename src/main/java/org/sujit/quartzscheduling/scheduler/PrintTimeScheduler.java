@@ -23,26 +23,3 @@ public class PrintTimeScheduler implements Job {
         log.info("Do log related task here !!");
     }
 }
-
-@Configuration
-class PrintTimeSchedulerJobConfig {
-
-    private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
-    private final String logSchedulerCornExpression;
-
-    public PrintTimeSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                   @Value("${quartz.timeScheduler.expression: * 1/2 * * * ?}") String logSchedulerCornExpression
-                                   ) {
-        this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
-        this.logSchedulerCornExpression = logSchedulerCornExpression;
-    }
-
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void schedulePrintTimeSchedulerJob() throws SchedulerException {
-        singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("PrintTimeScheduler"),
-                PrintTimeScheduler.class,
-                logSchedulerCornExpression,
-                SchedulerConstant.DEFAULT_TIMEZONE);
-    }
-}

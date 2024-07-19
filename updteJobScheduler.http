@@ -1,0 +1,14 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+POST http://localhost:8080/scheduler/update
+Content-Type: application/json
+
+{
+  "expression": "0 /1 * * * ?"
+}
+
+
+###
