@@ -12,10 +12,11 @@ import org.sujit.quartzscheduling.entity.JobDetails;
 import org.sujit.quartzscheduling.quartz.SingleTriggerCronJobScheduler;
 import org.sujit.quartzscheduling.service.JobDetailService;
 
+import static org.sujit.quartzscheduling.constant.JobConstant.PRINT_TIME_JOB_KEY;
+
 @Component
 public class PrintTimeSchedulerJobConfig {
 
-    private static final String PRINT_TIME_JOB_KEY = "PrintTimeScheduler";
 
     private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
 
