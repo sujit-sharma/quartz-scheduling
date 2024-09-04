@@ -8,29 +8,44 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.sujit.quartzscheduling.constant.SchedulerConstant;
+import org.sujit.quartzscheduling.entity.JobDetails;
 import org.sujit.quartzscheduling.quartz.SingleTriggerCronJobScheduler;
+import org.sujit.quartzscheduling.service.JobDetailService;
 
 @Component
 public class PrintTimeSchedulerJobConfig {
 
+    private static final String PRINT_TIME_JOB_KEY = "PrintTimeScheduler";
+
     private final SingleTriggerCronJobScheduler singleTriggerCornJobScheduler;
+
+    private final JobDetailService jobDetailService;
     @Setter
     private String printTimeSchedulerCornExpression;
 
     public PrintTimeSchedulerJobConfig(SingleTriggerCronJobScheduler singleTriggerCornJobScheduler,
-                                   @Value("0 /5 * * * ?") String logSchedulerCornExpression
+                                   @Value("0 /5 * * * ?") String logSchedulerCornExpression, JobDetailService jobDetailService
                                    ) {
         this.singleTriggerCornJobScheduler = singleTriggerCornJobScheduler;
         this.printTimeSchedulerCornExpression = logSchedulerCornExpression;
+        this.jobDetailService = jobDetailService;
     }
 
 
     @SneakyThrows
     @EventListener(ApplicationReadyEvent.class)
     public void schedulePrintTimeSchedulerJob() {
-        singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey("PrintTimeScheduler"),
+        saveJobScheduleDetails(printTimeSchedulerCornExpression);
+        singleTriggerCornJobScheduler.scheduleJob(JobKey.jobKey(PRINT_TIME_JOB_KEY),
                 PrintTimeScheduler.class,
                 printTimeSchedulerCornExpression,
                 SchedulerConstant.DEFAULT_TIMEZONE);
+    }
+
+    public void saveJobScheduleDetails(String printTimeSchedulerCornExpression) {
+        JobDetails jobDetails = new JobDetails();
+        jobDetails.setJobKey(PRINT_TIME_JOB_KEY);
+        jobDetails.setExpression(printTimeSchedulerCornExpression);
+        jobDetailService.saveOrUpdateJobDetail(jobDetails);
     }
 }
